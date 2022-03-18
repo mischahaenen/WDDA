@@ -55,7 +55,7 @@ library(dplyr)
 men = filter(BFH, gender == "Male")
 women = filter(BFH, gender == "Female")
 height_hist_women = hist(women$height, col = "pink")
-height_hist_men = hist(men$height, col="blue")
+height_hist_men = hist(men$height, col="blue")s
 # 10. hist hair women, men, all
 hair_hist_women = hist(women$hair, col = "pink")
 hair_hist_men = hist(men$hair, col="blue")
@@ -64,6 +64,19 @@ hair_hist_all = hist(sexes$hair)
 # 11. hist cash -> Die Daten sind rechtsschief
 cash_hist = hist(cash)
 # 12 height men / women
-men_height = filter(BFH, gender == "Male")$height
-women_height = filter(BFH, gender == "Female")$height
-
+list_men = filter(BFH, gender == "Male")
+list_women = filter(BFH, gender == "Female")
+# Returns highest value height
+shortest_man_height = min(list_men$height)
+amout_bigger_women = nrow(filter(list_women, height > shortest_man_height))
+# 13 foot men / woman
+# returns highest row sorted by height
+tallest_man = filter(list_men, height == max(height))
+nrow(filter(list_men, foot > tallest_man$foot)) == 1
+tallest_woman = filter(list_women,  height == max(height))
+nrow(filter(list_women, foot > tallest_woman$foot)) == 1
+# 14 list british recruits
+length(height[(gender=="Male" & height >= 173) | (gender=="Female" & height >= 163)])
+# 15 birthday in april
+library(lubridate)
+nrow(filter(BFH, month(dob) == 4))

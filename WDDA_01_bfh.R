@@ -80,3 +80,19 @@ length(height[(gender=="Male" & height >= 173) | (gender=="Female" & height >= 1
 # 15 birthday in april
 library(lubridate)
 nrow(filter(BFH, month(dob) == 4))
+# 16. Kontingenztabelle gender eye
+gender_eye = table(gender, eye)
+barplot(gender_eye)
+# 17. Streudiagramm
+# a) height & hair
+plot(height~hair, col =c('red', 'blue'))
+fit = lm(height~hair)
+abline(fit)
+# b) height & foot
+plot(height~foot, col =c('red', 'blue'))
+fit = lm(height~fot)
+abline(fit)
+# c) height & recaction1
+plot(height~reaction1, col =c('red', 'blue'))
+fit = lm(height~reaction1)
+abline(fit)

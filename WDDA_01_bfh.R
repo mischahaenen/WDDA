@@ -85,14 +85,35 @@ gender_eye = table(gender, eye)
 barplot(gender_eye)
 # 17. Streudiagramm
 # a) height & hair
-plot(height~hair, col =c('red', 'blue'))
-fit = lm(height~hair)
+plot(hair-height, col =c('red', 'blue'))
+fit = lm(hair~height)
 abline(fit)
 # b) height & foot
-plot(height~foot, col =c('red', 'blue'))
-fit = lm(height~fot)
+plot(foot~height, col =c('red', 'blue'))
+fit = lm(height~foot)
 abline(fit)
 # c) height & recaction1
-plot(height~reaction1, col =c('red', 'blue'))
-fit = lm(height~reaction1)
+plot(reaction1~height, col =c('red', 'blue'))
+fit = lm(reaction1~height)
 abline(fit)
+# 18 Golf
+# a) man / frau grüns sind zu schnell
+gender_golf = matrix(c(35, 40, 65, 60), nrow = 2, ncol = 2, dimnames = list(c("männlich","weiblich"), c("zu schnell","ok")))
+col_zu_schnell = gender_golf[,"zu schnell"]
+perc_male = col_zu_schnell[1] # 35
+perc_female = col_zu_schnell[2] # 40
+# b) unter 15 grüns sind zu schnell
+male_golf = matrix(c(10, 25, 40, 25), nrow = 2, ncol = 2, dimnames = list(c("unter 15","15 und mehr"), c("zu schnell","ok")))
+female_golf = matrix(c(1, 39, 9, 51), nrow = 2, ncol = 2, dimnames = list(c("unter 15","15 und mehr"), c("zu schnell","ok")))
+male_players = male_golf["unter 15",]
+female_players = female_golf["unter 15",]
+100 / (male_players[1]+male_players[2]) * male_players[1] # 20 % 
+100 / (female_players[1]+female_players[2]) * female_players[1] # 10 %
+#c) 15 und mehr grüns zu schnell
+male_players = male_golf["15 und mehr",]
+female_players = female_golf["15 und mehr",]
+100 / (male_players[1]+male_players[2]) * male_players[1] # 50 % 
+100 / (female_players[1]+female_players[2]) * female_players[1] # 43.3 %
+# d) 
+# a besagt das weniger männer sagen das die grüns zu schnell sind, b & c sagen das gegenteil
+# Fazit: Differenz zwischen Geschlecht & Erfahrung: Gemäs Daten gibt es mehr Männer die besser Golf spielen.

@@ -1,5 +1,5 @@
 library(readxl)
-
+# Theorie Handout 3
 #graduates <- read_excel("./WDDA_03.xlsx", sheet = "Graduates")
 graduates <- read_excel("dev/projects/school/WDDA/WDDA_03.xlsx", sheet = "Graduates")
 View(graduates)
@@ -82,7 +82,7 @@ sd(Salary)
 hist(Salary)
 hist(Cars93$EngineSize)
 # z steht für standartisierten wert
-salary_z = (Salary-mean(Salary)) / sd(Salary)s
+salary_z = (Salary-mean(Salary)) / sd(Salary)
 mean(salary_z) # ist immer 0
 sd(salary_z) # ist immer 1
 engine_z = (Cars93$EngineSize-mean(Cars93$EngineSize)) / sd(Cars93$EngineSize)
@@ -90,3 +90,32 @@ hgA = hist(engine_z)
 hgB = hist(salary_z)
 plot(hgA, col = "blue")
 plot(hgB, col = "red", add = TRUE)
+
+# Schiefe
+n <- length(salary_z)
+# Schiefe Formel: Ergibt Wert negativ = linksschief / null = symmetrisch / positiv = rechtsschief
+n / ((n-1)*(n-2))*sum(salary_z^3) # = Symmetrisch
+# Beispiel mit libraries
+library(e1071)
+skewness(Salary)
+library(moments)
+skewness(Salary)
+
+# Stärke Zusammenhang
+# Punkte erheben sich -> positiven Zusammenhang
+# Punkte senken sich -> negativer Zusammenhang
+detach(graduates)
+library(readxl)
+advertising <- read_excel("dev/projects/school/WDDA/WDDA_03.xlsx", sheet = "Advertising")
+attach(advertising)
+plot(sales~adverts)
+n <- length(sales)
+# Brechnung Kovarianz
+1/(n-1)*sum((sales-mean(sales))*(adverts-mean(adverts)))
+# Befehl Kovarianz
+cov(sales,adverts)
+# Korrelationskoeffizient: Zahl zwischen -1 (schwach) , 0  (keine) und + 1 (stark)
+# Berechung
+cov(sales,adverts)/(sd(sales)*sd(adverts))
+# Befehl
+cor(sales,adverts)

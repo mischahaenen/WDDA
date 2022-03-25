@@ -103,6 +103,7 @@ col_zu_schnell = gender_golf[,"zu schnell"]
 perc_male = col_zu_schnell[1] # 35
 perc_female = col_zu_schnell[2] # 40
 # b) unter 15 grüns sind zu schnell
+# byrow = T kann vektor als c(10, 40, 25, 25) gesetzt werden
 male_golf = matrix(c(10, 25, 40, 25), nrow = 2, ncol = 2, dimnames = list(c("unter 15","15 und mehr"), c("zu schnell","ok")))
 female_golf = matrix(c(1, 39, 9, 51), nrow = 2, ncol = 2, dimnames = list(c("unter 15","15 und mehr"), c("zu schnell","ok")))
 male_players = male_golf["unter 15",]

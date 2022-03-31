@@ -78,7 +78,7 @@ sqrt(var(Salary))
 sd(Salary)
 
 # Z-Werte (standartisierte Werte)
-# ausgangslage: vergleich schwar da x-ache sehr unterschiedlich
+# ausgangslage: vergleich schwer da x-achse sehr unterschiedlich
 hist(Salary)
 hist(Cars93$EngineSize)
 # z steht für standartisierten wert

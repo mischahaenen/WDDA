@@ -1,0 +1,23 @@
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `Dozent`;
+DROP TABLE IF EXISTS `Verantstaltung`;
+SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE `Dozent` (
+    `pID` INTEGER NOT NULL,
+    `name` VARCHAR(30) NOT NULL,
+    `kurzel` CHAR(4) NOT NULL,
+    `geburtstdatum` DATE,
+    PRIMARY KEY (`pID`),
+    UNIQUE (`kurzel`)
+);
+
+CREATE TABLE `Verantstaltung` (
+    `vID` INTEGER NOT NULL,
+    `name` VARCHAR(30) NOT NULL,
+    `raum` VARCHAR(10),
+    `doz` INTEGER,
+    PRIMARY KEY (`vID`)
+);
+
+ALTER TABLE `Verantstaltung` ADD FOREIGN KEY (`doz`) REFERENCES `Dozent`(`pID`);

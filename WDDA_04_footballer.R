@@ -1,5 +1,6 @@
+# Kapitel 4
 library(readxl)
-Footballer <- read_excel("dev/projects/school/WDDA/WDDA_04.xlsx", sheet = "Footballer")
+Footballer <- read_excel("projects/school/WDDA/WDDA_04.xlsx", sheet = "Footballer") 
 View(Footballer)
 attach(Footballer)
 # Durchschnittlicher Wochenlohn

@@ -35,26 +35,21 @@ Audit <- read_excel("./WDDA_02.xlsx", sheet = "Audit")
 View(Audit)
 attach(Audit)
 
-# Besitzt viele Werte mit 1, daher müssen diese gruppiert werden
-time <- table(Time)
+time <- table(Time) # Gruppieren
+# Vektor mit 5er Schritten
+bins <- c(0, 5 * 0:5 + 10)
+# schöner
+bins <- c(0, seq(10, 35, 5))
+# -> Levels: (10,15] (15,20] ...
+time_binned <- cut(Time, bins) # Zuweisung der Werte zu den einzelnen bins
+time_table <- table(time_binned) # Häufigkeitsverteilung erstellen
+time_table_percent <- table(time_binned) / length(Time) # Prozent verteilung
+barplot(time_table) # Balkendiagramm
+pie(time_table_percent) # Kuchendiagramm
 
-# Quantitative Daten werden in Klassen zusammengefasst
-bins <- c(0,5*0:5+10) # Vektor mit 5er Schritten plus 10 // <- und = machen das gleiche
-time_binned <- cut(Time, bins) # -> Levels: (10,15] (15,20] ... (15 gehört nicht dazu 15 ist im vorderen dataset
-
-time_table <- table(time_binned)
-barplot(time_table)
-
-time_table_percent <- table(time_binned) / length(Time)
-print(time_table_percent)
-pie(time_table_percent)
-
-# Werte löschen
-rm(schritte)
-
+sum(Time) # Summe aller Zeiten
 # cumulated sum -> calculates all values from range
-cumsum(time_table) # 19 werte sind zwischen 0 und 30
+cumsum(table(Time)) # Kummulierte Häufigkeits-Verteilung
 cumsum(time_table_percent) # 95% der werte sind zwischen 0 und 30
-
-# Histogramm: Plot für nummerische Daten
+hist(Time, breaks = 10)
 hist(Time, breaks = bins)

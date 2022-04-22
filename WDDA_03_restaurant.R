@@ -1,45 +1,35 @@
 #WDDA Woche 3
 library(readxl)
 restaurant <- read_excel("./WDDA_02.xlsx", sheet = "Restaurant")
+attach(restaurant)
 View(restaurant)
 
-head(restaurant, 3)
-head(restaurant)
+head(restaurant, 3) # Gibt Anfang der Liste zurück (default 6)
+tail(restaurant, 3) # Gibt Ende der Liste zurück (default 6)
 
-attach(restaurant)
-Quality == "Good"
-Price[Quality == "Good"]
 
-restaurant[Quality == "Good"]
+Price[Quality == "Good"] # Filtert Preise nach Qualität == Good
+length(Price[Quality == "Good"]) # Länge des Vektors || Anzahl Preise Good
+restaurant[Quality == "Good", ] # Filtert Restaurants nach Qualität == Good
+nrow(restaurant[Quality == "Good", ]) # Anzahl Restaurants Good
 
-# länge vektor
-length(Price[Quality == "Good"])
-# länge datensatz
-nrow(restaurant[Quality == "Good",])
-
-#Preise maximal 20
-Price <= 20
-Price[Price <= 20]
-restaurant[Price <= 20,]
+Price[Price <= 20] # Preis max 20
+restaurant[Price <= 20, ] # Restaurant Preis max 20
 #Logisches UND
-restaurant[Price <= 20 & Quality == "Good",]
+restaurant[Price <= 20 & Quality == "Good", ]
 # Logisches ODER
-restaurant[Price <= 20 | Quality == "Good",]
+restaurant[Price <= 20 | Quality == "Good", ]
 # Logisches NICHT
-restaurant[Price <= 20 & Quality != "Good",]
+restaurant[Price <= 20 & Quality != "Good", ]
+library(dplyr)
+filter(restaurant, Price <= 20) # Filtern mit Library
+sort(Price) # Sortiert Preise
 
-# Gibt mögliche Funktionen von sort und order an
-?sort
-?order
-
-# Sortieren nach Preis
-gute_rest <- restaurant[Price <= 20 & Quality == "Good",]
-gute_rest[sort(Price),]
-
-# Tabelle erstellen
-table(Quality)
-# Kreuztabelle erstellen
-table(Quality, Price)
-bins <- 10 * (0:5)
+# tabellarische Zusammenfassung von Daten für zwei Variablen
+quality_preis <- table(Quality, Price) # Kreuztabelle
+barplot(quality_preis) # Zeigt Preis mit Quality an
+bins <- seq(0, 50, 10)
 preise_klassiert <- cut(Price, bins)
-table(Quality, preise_klassiert)
+quality_preis_binned <- table(Quality, preise_klassiert) # Kreuztabelle mit bins
+barplot(quality_preis_binned)
+

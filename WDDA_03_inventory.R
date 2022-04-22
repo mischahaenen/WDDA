@@ -8,17 +8,14 @@ head(inventory)
 tail(inventory)
 
 library(stringr)
-# Split up a string into pieces.
-str_split_fixed(shirt, ",", 3)
-# Speichern der Ergebnisse
+# str_split_fixed zerteilt strings zu listen (liste, seperator, anzahl)
 inventory2 <- data.frame(str_split_fixed(shirt, ",", 3))
+# Spaltennamen setzten
 colnames(inventory2) <- c("style", "color", "size")
 head(inventory2)
 # Preis hinzufügen
-inventory2$price <- inventory$price
-inventory2$discount <- inventory$price * 0.7
-# spalte löschen
-inventory2 <- inventory2[, -4]
-
-# Aggregieren nach Farbe
+inventory2$price <- inventory$price # Spalte hinzufügen
+inventory2$discount <- inventory$price * 0.7 # Spalte hinzufügen
+inventory2 <- inventory2[, -4] # spalte löschen
+# Aggregieren bzw. zusammenfassen nach Farbe
 aggregate(inventory2, list(inventory2$color), length)

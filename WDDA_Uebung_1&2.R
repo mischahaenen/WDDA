@@ -55,7 +55,7 @@ library(dplyr)
 men = filter(BFH, gender == "Male")
 women = filter(BFH, gender == "Female")
 height_hist_women = hist(women$height, col = "pink")
-height_hist_men = hist(men$height, col="blue")s
+height_hist_men = hist(men$height, col="blue")
 # 10. hist hair women, men, all
 hair_hist_women = hist(women$hair, col = "pink")
 hair_hist_men = hist(men$hair, col="blue")

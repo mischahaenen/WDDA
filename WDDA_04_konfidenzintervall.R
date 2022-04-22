@@ -63,6 +63,7 @@ detach(bfh)
 attach(exercise_hours)
 View(exercise_hours)
 # Filtern Gruppen nach Geschlecht (Mann / Frau)
-men <- Sex[1:5]
-women <- Sex[Sex == "W", ]
+length(Sex)
+men <- Sex[Sex == "M"]
+women <- Sex[Sex == "F"]
 mw_m <- mean(men$Exercise)

@@ -3,8 +3,6 @@ mustangs <- read_excel("./WDDA_04.xlsx", sheet = "Mustangs")
 View(mustangs)
 attach(mustangs)
 
-
-
 library(mosaic)
 # Konfiidenzintervall für Preise mit Bootstrapping
 mustangs_price_boot <- do(5000) * mean(resample(Price))
@@ -16,6 +14,7 @@ hist(mustangs_price_boot$mean,
     main = "Mean Mustang Price",
     xlab = "Price (in 1000$)",
     ylab = "count")
+
 # Mittelwert verändert sich nicht!
 mean(mustangs_price_boot$mean) # 16.01845
 # Histogramm der Preise
@@ -52,3 +51,4 @@ quantiles # -0.9371607 -0.7026376
 confint(mustangs_cor_boot$cor) # -0.9284472 -0.7219353
 # 98% Konfidenzintervall
 confint(mustangs_cor_boot$cor, level = .98) # -0.9360365 -0.7023308
+

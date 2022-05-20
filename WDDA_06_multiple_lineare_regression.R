@@ -1,5 +1,5 @@
 
-# Woche 10
+# Woche 10 & 11
 library(readxl)
 advertising <- read_excel("projects/school/WDDA/WDDA_06.xlsx", sheet = "Advertising") 
 #advertising <- read_excel("./WDDA_06.xlsx", sheet = "Advertising")
@@ -76,3 +76,48 @@ RSS
 
 summary(md3)
 summary(md2)
+
+# Nicht Linearer Zusammenhang
+#quadratic <- read_excel("projects/school/WDDA/WDDA_06.xlsx", sheet = "Quadratic") 
+quadratic <- read_excel("./WDDA_06.xlsx", sheet = "Quadratic")
+View(quadratic)
+attach(quadratic)
+
+# Ergibt eine Prabel daher muss man ein Quadratisches Modell machen
+md_q1 <- lm(y ~ x)
+plot(y ~ x)
+abline(md_q1)
+summary(md_q1)
+
+# Show funny correlations
+library(datasauRus)
+if(requireNamespace("ggplot2")){
+  library(ggplot2)
+  ggplot(datasaurus_dozen, aes(x = x, y = y, colour = dataset))+
+    geom_point()+
+    theme_void()+
+    theme(legend.position = "none")+
+    facet_wrap(~dataset, ncol = 3)
+}
+
+# Quadratisches Modell (Regression)
+# y gegen eine funktion x^2 -> polynom
+md_q2 <- lm(y ~ poly(x, 2, raw = TRUE))
+b <- coef(md_q2)
+f <- function(x) b[1] + b[2] * x + b[3] * x ^ 2
+curve(f(x), add = TRUE, col = "#952e2e")
+
+# Poynomiale Regression
+#quadratic <- read_excel("projects/school/WDDA/WDDA_06.xlsx", sheet = "Quadratic") 
+polynomial <- read_excel("./WDDA_06.xlsx", sheet = "Polynomial")
+View(polynomial)
+attach(polynomial)
+detach(quadratic)
+
+# Kubisches Modell (Modell 3. Grades)
+md_q3 <- lm(y ~ poly(x, 3, raw = TRUE))
+summary(md_q3)
+b <- coef(md_q3)
+g <- function(x) b[1] + b[2] * x + b[3] * x ^ 2 + b[4] * x ^ 3
+plot(y ~ x)
+curve(g(x), add = TRUE)

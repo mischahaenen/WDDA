@@ -1,8 +1,8 @@
 
 # Woche 10 & 11
 library(readxl)
-advertising <- read_excel("projects/school/WDDA/WDDA_06.xlsx", sheet = "Advertising") 
-#advertising <- read_excel("./WDDA_06.xlsx", sheet = "Advertising")
+#advertising <- read_excel("projects/school/WDDA/WDDA_06.xlsx", sheet = "Advertising") 
+advertising <- read_excel("./WDDA_06.xlsx", sheet = "Advertising")
 View(advertising)
 attach(advertising)
 
@@ -36,14 +36,15 @@ RSS <- sum((sales - predict(md2)) ^ 2)
 
 # Interpretation der Koeffizienten
 coef(md2)
-pbf(10, 10)
-pbf(11, 10) - pbf(10, 10)
-pbf(10, 11) - pbf(10, 10)
-pbf(0, 0)
+pbf(10, 10) # 5.258
+pbf(11, 10) - pbf(10, 10) # 0.04575
+pbf(10, 11) - pbf(10, 10) # 0.18799
+pbf(0, 0) # 2.9211
 
-RSE <- sqrt(RSS / (length(sales)))
-summary(md2)
-RSE <- summary(md2)$sigma
+RSE <- sqrt(RSS / (length(sales))) # 1.68
+# Residual standard error
+summary(md2) # 1.681
+RSE <- summary(md2)$sigma # 1.68
 
 # Beispiel einer Prognose
 # TV = 230, radio = 37.8
@@ -53,9 +54,9 @@ predict(md2,
         interval = "prediction")
 
 # Konstante variation um x-Achsen
+hist(resid(md2)) # linksschief
 plot(resid(md2) ~ TV)
 plot(resid(md2) ~ radio)
-
 plot(resid(md2) ~ predict(md2))
 
 # Kalibrierungsplot
@@ -65,17 +66,17 @@ plot(sales ~ predict(md2))
 pairs(cbind(sales, TV, radio))
 pairs(advertising)
 
+
 md3 <- lm(sales ~ TV + radio + newspaper)
+# ist Modell 3 besser als Modell 2? Nur ein wenig
+summary(md3)$sigma # 1.68551
+summary(md2)$sigma # 1.68131
 
-# ist Modell 3 besser als Modell 2?
-summary(md3)$sigma
-summary(md2)$sigma
+RSS_md3 <- sum(resid(md3) ^ 2) # 556.8253
+RSS # 556.914
 
-RSS_md3 <- sum(resid(md3) ^ 2)
-RSS
-
-summary(md3)
-summary(md2)
+summary(md3) # 1.686
+summary(md2) # 1.681
 
 # Nicht Linearer Zusammenhang
 #quadratic <- read_excel("projects/school/WDDA/WDDA_06.xlsx", sheet = "Quadratic") 

@@ -1,4 +1,4 @@
-#WDDA Woche 1
+# WDDA Woche 1
 library(readxl)
 # load excel sheet to work with
 markets <- read_excel("dev/projects/school/WDDA/WDDA_01.xlsx", 

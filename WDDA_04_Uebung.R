@@ -176,7 +176,6 @@ dist_q995 <- quantile(boot1000_m, probs = 0.995)
 # b) n = 16 -> A=[66,74]
 # c) 1000 BS -> B = [67,73]
 
-# TODO
 # 17) 99%-Konfiidenzintervall
 # 1000 Pers, 382 zustimmen, 578 nicht, 40 unschlüssig
 p_hut <- 578 / (382 + 578)

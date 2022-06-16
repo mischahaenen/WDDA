@@ -36,6 +36,7 @@ confint(md2)
 
 # Nicht statistisch signifikante Variable
 md3 <- lm(sales ~ TV + radio + newspaper)
+summary(md3)
 # Erhöhung in R^2 reicht nicht aus
 # Im vergleich zu Modell 2 ist das Modell 3 nicht besser
 c(summary(md2)$r.sq, summary(md3)$r.sq) # 0.8971943 0.8972106
@@ -75,3 +76,7 @@ predict(md2, new_xi, interval = "prediction")
 # fit 13.92464 lwr: 10.57998 upr: 17.26931
 predict(md2, new_xi, interval = "confidence")
 # fit 13.92464 lwr 13.48598 upr 14.36331
+
+
+
+

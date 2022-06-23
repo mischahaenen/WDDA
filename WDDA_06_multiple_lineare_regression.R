@@ -61,7 +61,6 @@ plot(resid(md2) ~ predict(md2))
 
 # Kalibrierungsplot
 plot(sales ~ predict(md2))
-
 # Scatterplot
 pairs(cbind(sales, TV, radio))
 pairs(advertising)

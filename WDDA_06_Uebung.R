@@ -1,9 +1,10 @@
 # Aufgabe 1
 library(readxl)
-goldchains <- read_excel("projects/school/WDDA/WDDA_06.xlsx", sheet = "Gold Chains")
-# goldchains <- read_excel("./WDDA_06.xlsx", sheet = "Gold Chains")
+# goldchains <- read_excel("projects/school/WDDA/WDDA_06.xlsx", sheet = "Gold Chains")
+goldchains <- read_excel("./WDDA_06.xlsx", sheet = "Gold Chains")
 names(goldchains) <- c("Price", "Length", "Width")
 attach(goldchains)
+View(goldchains)
 # a) Streudiagramme der Zielvariablen auf den beiden erklärenden Variablen
 # Price ist die erklärte Variable
 plot(Price ~ Length) # Schwache korrelation

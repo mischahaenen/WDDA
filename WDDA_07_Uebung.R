@@ -251,5 +251,98 @@ mod4 <- lm(sat ~ salary + ratio + frac)
 summary(mod4)
 tab_model(mod4)
 
-# 7)
-# 8)
+# 7) Daten in Ploynomial
+ploynomial <- read_excel("./WDDA_07.xlsx", sheet = "Polynomial")
+attach(ploynomial)
+View(ploynomial)
+# a) SRM für y an x. Erklärt x die statistisch signifikante Variation in y?
+mod1 <- lm(y ~ x)
+confint(mod1) # x: [-0.155 -0.039] < 0
+summary(mod1) # Erklärt 5% der daten
+# Fazit: X ist signifikant da 0 nicht vorkommt, jedoch erklärt es nur
+# 5% der daten.
+# b) Untersuchen Sie die Residuen
+plot(residuals(mod1))
+abline(0, 0)
+# Man kann sehen das nicht alle Residuals gleichmässig um 0 verteilt sind
+# jedoch sind alle zufällig verteilt.
+hist(residuals(mod1))
+skewness(residuals(mod1)) # -0.276
+# Man kann beobachten das die Residuen nicht glockenförmig um null verteilt sind
+# es ist sogar linksschief.
+# c) Polynomiale Regression bis Grad 5, und wählen bevorzugtes Modell, warum?
+plot(y ~ x)
+# Modell 2 Grades (Quadratisches Modell)
+md_q2 <- lm(y ~ poly(x, 2, raw = TRUE))
+b <- coef(md_q2)
+f <- function(x) b[1] + b[2] * x + b[3] * x^2
+curve(f(x), add = TRUE, col = "#952e2e")
+rss_md2 <- sum((y - f(x))^2) # 16.6732
+summary(md_q2)
+# Modell 3 Grades (Cubisches Modell)
+md_q3 <- lm(y ~ poly(x, 3, raw = TRUE))
+b <- coef(md_q3)
+g <- function(x) b[1] + b[2] * x + b[3] * x^2 + b[4] * x^3
+curve(g(x), add = TRUE, col = "#952e2e")
+rss_md3 <- sum((y - g(x))^2) # 4.776226
+summary(md_q3)
+# Modell 4 Grades (Quartisches Modell)
+md_q4 <- lm(y ~ poly(x, 4, raw = TRUE))
+b <- coef(md_q4)
+h <- function(x) b[1] + b[2] * x + b[3] * x^2 + b[4] * x^3 + b[5] * x^4
+curve(h(x), add = TRUE, col = "#952e2e")
+rss_mod4 <- sum((y - h(x))^2) # 4.77547
+summary(md_q4)
+# Modell 5 Grades (Quintisches Modell)
+md_q5 <- lm(y ~ poly(x, 5, raw = TRUE))
+b <- coef(md_q5)
+i <- function(x) {
+    b[1] + b[2] * x + b[3] *
+        x^2 + b[4] * x^3 + b[5] * x^4 + b[6] * x^5
+}
+curve(i(x), add = TRUE, col = "#952e2e")
+rss_mod5 <- sum((y - i(x))^2) # 4.722157
+summary(md_q5)
+# Fazit: das Modell 3 Grades hat die besten p-werte und erklärt das
+# Modell zu 72%. Modell 4 und 5 bieten keinen grossen mehrwert.
+# d) Erklärt Ihr Modell statistisch signifikante Variation in y?
+# Fazit: Ja, es ist signifikant. Das Modell 3 Grades ist signifikant.
+# Bietet alle signifikanten p-werte und beschreibt 73.86% der Daten
+
+# 8) production_cost
+# Kunde möchte preis pro einheit: somit alles durch units
+production_costs <- read_excel("./WDDA_07.xlsx", sheet = "production_costs")
+attach(production_costs)
+View(production_costs)
+names(production_costs) <- c(
+    "units", "total_costs", "total_labor_hours",
+    "total_material_cost", "break_down_per_run"
+)
+production_costs$cost_per_unit <- total_costs / units
+production_costs$labor_hour_per_unit <- total_labor_hours / units
+production_costs$material_cost_per_unit <- total_material_cost / units
+production_costs$break_down_per_run_per_unit <- break_down_per_run / units
+# a) Identifizieren Sie die geeigneten Ziel- und erklärenden Variablen.
+mod1 <- lm(cost_per_unit ~ labor_hour_per_unit + material_cost_per_unit +
+    break_down_per_run_per_unit)
+summary(mod1)
+tab_model(mod1)
+cor(cost_per_unit, labor_hour_per_unit)
+cor(cost_per_unit, material_cost_per_unit)
+cor(cost_per_unit, break_down_per_run_per_unit)
+# total_labor_hours   0.4948105
+# total_material_cost 0.3655521
+# break_down_per_run  0.2112533
+# Fazit: Alle erklärenden variablen sind signifikant jedoch ist die
+# korrelation break_down_per_run_per_unit sehr tief.
+mod2 <- lm(cost_per_unit ~ material_cost_per_unit + labor_hour_per_unit)
+# cost_per_unit = 19.874 + 2.284 * mmaterial cost + 34.26 * labor hour
+summary(mod2)
+tab_model(mod2)
+# r^2 = 0.336 -> 33.6% der Daten sind erklärbar
+# RSE: 7.338 -> sehr tief
+# p werte ebenfals sehr tief also gut!
+
+# b) Modell für Hersteller und zeigen Sie eine Zusammenfassung des Modells.
+# Modell 2 zeigt kosten für jedes unit und erklärt 33.6% der daten
+summary(mod2)

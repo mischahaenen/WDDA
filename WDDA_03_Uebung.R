@@ -61,8 +61,9 @@ boxplot(distance ~ transport, horizontal = T)
 boxplot(foot ~ eye, horizontal = T)
 
 # 9) Standartabweichung
-# Definition: Die Varianz ist ein Mass für die durchschnittliche Abweichung vom Mittelwert für alle Daten.
-#             Die Standardabweichung ist die Quadratwurzel der Varianz.
+# Definition: Die Varianz ist ein Mass für die durchschnittliche
+# Abweichung vom Mittelwert für alle Daten.
+# Die Standardabweichung ist die Quadratwurzel der Varianz.
 # a) height
 sd(height)
 # b) maths
@@ -70,10 +71,30 @@ sd(maths)
 # c) cash
 sd(cash)
 
-# FIXME: 10 Empirische Regel
+# 10) Empirische Regel
+# ≈ 68% der Beobachtungen liegen im Intervall [x − s, x + s]
+# ≈ 95% der Beobachtungen liegen im Intervall [x − 2s, x + 2s]
+# Fast alle der Beobachtungen liegen im Intervall [x − 3s, x + 3s]
 # a) height
 boxplot(height, horizontal = T)
 hist(height)
+x_bar <- mean(height)
+se <- sd(height)
+# 1. Regel
+confint(height, level = 0.68)
+x <- x_bar + c(-se, se)
+length(height[height >= x[1] & height <= x[2]]) / length(height)
+# covers 63% of the data (0.6267)
+# 2. Regel
+confint(height, level = 0.95)
+x <- x_bar + c(-2 * se, 2 * se)
+length(height[height >= x[1] & height <= x[2]]) / length(height)
+# covers 96.77% (0.9677)
+# 3. Regel
+confint(height, level = 1)
+x <- x_bar + c(-3 * se, 3 * se)
+length(height[height >= x[1] & height <= x[2]]) / length(height)
+# covers 100% of the data (1)
 # b) foot
 boxplot(foot, horizontal = T)
 hist(foot)

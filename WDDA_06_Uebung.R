@@ -192,7 +192,6 @@ plot(residuals(mod2) ~ file_size_in_MB)
 plot(residuals(mod2) ~ hours_past_8)
 # Fazit: Ja, beide sind zufällig und konstant um X-Achse verteilt.
 # l) Verwenden Sie ein Pfaddiagramm, um Ihr Modell zusammenzufassen.
-# TODO
 # m) Verwenden Sie die 3D-Visualisierung, um Stichprobe & Modell anzuzeigen.
 scatterplot3d(download)
 # n) Betrachten Sie das SRM mit Dateigrösse als erklärende Variable.

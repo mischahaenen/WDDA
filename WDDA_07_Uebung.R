@@ -142,6 +142,7 @@ bfh <- transform(bfh, dob = as.Date(dob))
 bfh <- bfh[dob != as.Date("0001-01-01"), ]
 # calculate ages
 bfh$age <- age_calc(bfh$dob, Sys.Date(), units = "years")
+attach(bfh)
 # b) = dob
 
 # Schritte beim Aufbau von Regressionsmodellen
@@ -156,7 +157,7 @@ bfh$age <- age_calc(bfh$dob, Sys.Date(), units = "years")
 # wende die Vorwärtsauswahl an, oder kombiniere beide.
 
 # c) Starten Vollmodell und finden eine optimale Variablenkombination
-#    mittels Rückwärtsauswahl
+#    mittels Rückwärtsauswahls
 plot(height ~ age + foot + hair + siblings + sleep)
 mod1 <- lm(height ~ age + foot + hair + siblings)
 # ansicht der einzelnen p werte in summary (Pr(>|t|))
@@ -176,10 +177,12 @@ plot(residuals(mod2))
 # Residuen sind zufällig um 0 verteilt
 # d) Starten Nullmodell und finden eine optimale Variablenkombination
 #    mittels Vorwärtsauswahl.
-# TODO
+# Für eine optimale Variablenkombination, starte vom Vollmodell
+# und verwende die Rückwärtsauswahl, oder vom Nullmodell und
+# wende die Vorwärtsauswahl an, oder kombiniere beide.
 # e) Erhalten Sie dieselbe optimale Kombination?
 #    Wenn nicht, ist es ein Widerspruch?
-# TODO
+# Nö
 
 # 6) SAT
 SAT <- read_excel("./WDDA_07.xlsx", sheet = "SAT")

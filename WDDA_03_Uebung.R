@@ -236,7 +236,41 @@ cor(hair, hair)
 
 # 21) Tief (r = 0.17) da Korrelation nicht linear ist
 
-# 22)
-# 23)
-# 24)
-# 25)
+# 22) Stock_2008
+stock_2008 <- read_excel("./WDDA_03.xlsx", sheet = "Stock_2008")
+View(stock_2008)
+attach(stock_2008)
+# a) Bestimmen Sie Mittelwert und Median der prozentualen Änderungen.
+# Median
+median(Fall) # 39.19
+# Mittelwert
+mean(Fall) # 38.96786
+# b) Bestimmen Sie das erste und dritte Quartil.
+quantile(Fall, probs = c(0.25, 0.75)) # [32.610 43.815]
+# c) Enthalten die Daten irgendwelche Ausreisser? Konstruieren Sie ein Boxplot.
+boxplot(Fall)
+# keine Ausreisser
+# d) Welche Perzentile würden Sie für Belgien melden?
+belgium <- Fall[Country == "Belgium"]
+# PErzentil anzeigen vom Wert
+match(belgium, sort(Fall)) / (length(Fall) + 1)
+# 0.7231379 Perzentil
+
+# 3tes Quartil da das 3 Quartil erst bei 43.8 endet
+
+# 23) DAX_CAC
+dax_cac <- read_excel("./WDDA_03.xlsx", sheet = "DAX_CAC")
+View(dax_cac)
+attach(dax_cac)
+# a) Berechnen Sie den Korrelationskoeffizienten für diese Daten. CAC.
+cor(CAC, DAX) # 0.92
+# b) Sindsie schlecht korreliert, oder haben sie einen starken Zusammenhang?
+# Lösung: Sie haben einen sehr starken positiven linearen Zusammenhang.
+
+# 24) Korrelationen zwischen Factual Reporting und Bias
+# Gemäss Grafik schwindet die Factual Reporting je Politisch Rechter
+# die Zeitschrift wird.
+
+# 25) Economist
+# a) Die Republikaner sind eher radikaler geworden und Demokraten
+# leicht liberaler

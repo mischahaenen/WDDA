@@ -111,7 +111,8 @@ library(mosaic)
 p_hut <- 180 / 250
 stich_m <-
     do(1000) *
-    mean(sample(0:1, size = 250, replace = TRUE, prob = c(p_hut, 1 - p_hut)))
+        mean(sample(0:1, size = 250, replace = TRUE, prob = c(p_hut, 1 - p_hut)))
+
 # Standartfehler (se)
 se <- sd(stich_m$mean) # 0.028
 # 95% Konfidenzintervall
@@ -120,7 +121,7 @@ p_hut + c(-2 * se, 2 * se) # [0.664, 0.776]
 # 13. Wie viele Ameisen klettern auf ein Honigbrot?
 #     Stichprobe: 43,59,22,25,36,47,19,21.
 # a) Bestimmen Sie ¯x (mittelwert einer Stichprobe) und s (standartabeichung).
-stichprobe <- c(43, 59, 22, 25, 36, 47, 19, 21.)
+stichprobe <- c(43, 59, 22, 25, 36, 47, 19, 21)
 x_bar <- mean(stichprobe) # 34
 s <- sd(stichprobe) # 14.629
 # b) Beschreiben Sie,wie man eine Bootstrap-Statistik erstellt. konkret!
@@ -137,7 +138,7 @@ s <- sd(stichprobe) # 14.629
 # e) 5000 Bootstrap-Stichproben und Standardfehler.
 stich_m <-
     do(5000) *
-    mean(resample(stichprobe))
+        mean(resample(stichprobe))
 se <- sd(stich_m$mean) # 4.777
 # f) 95%-Konfidenzintervall.
 x_bar + c(-2 * se, 2 * se) # [24.4 43.6]
@@ -147,7 +148,7 @@ x_bar + c(-2 * se, 2 * se) # [24.4 43.6]
 p_hut <- 208 / 400
 stich_m <-
     do(1000) *
-    mean(sample(0:1, size = 400, replace = TRUE, prob = c(p_hut, 1 - p_hut)))
+        mean(sample(0:1, size = 400, replace = TRUE, prob = c(p_hut, 1 - p_hut)))
 se <- sd(stich_m$mean) # 0.025
 # Berechnung mit empirischer Regel
 p_hut + c(-2 * se, 2 * se) # [0.469 0.571]
@@ -161,6 +162,13 @@ confint(stich_m$mean, level = 0.95) # [0.4325. 0.53]
 #         Der Fehlerbereich schrumpft nur mit Wuzel n
 
 # 15) Konfidenzintervall mit Perzentilen
+BFH <- read_excel("./WDDA_04.xlsx", sheet = "BFH")
+attach(BFH)
+hist(distance)
+# Stichprobe kopieren um Stichprobenverteilung zu erhalten
+# do ist in library mosaic enthalten
+boot1000_distance <- do(1000) * resample(distance)
+boot1000_m <- apply(boot1000_distance, 1, mean)
 # 95%-Konfidenzintervall (25)
 dist_q25 <- quantile(boot1000_m, probs = 0.025, type = 1)
 dist_q975 <- quantile(boot1000_m, probs = 0.975, type = 1)
@@ -179,7 +187,7 @@ dist_q995 <- quantile(boot1000_m, probs = 0.995)
 # 17) 99%-Konfiidenzintervall
 # 1000 Pers, 382 zustimmen, 578 nicht, 40 unschlüssig
 p_hut <- 578 / (382 + 578)
-    do(1000) *
+do(1000) *
     mean(sample(c(0, 1), size = 1000, replace = TRUE, prob = c(p_hut, 1 - p_hut)))
 confint(stich_m$mean, level = 0.99) # [0.564, 0.64]
 # Lösung Nein: Anzeil der Nicht-Zustimmer zwischen 0.564 und 0.64
@@ -199,12 +207,12 @@ cash_median_boot <- do(5000) * median(resample(cash))
 confint(cash_median_boot, level = 0.9) # 25 40
 
 # 19) Schlafen Studentinnen mehr als Studenten?
-bfh_non_binary <- bfh[gender != "Non binary",]
-men <- bfh_non_binary[gender == 'Male',]
-women <- bfh_non_binary[gender == 'Female',]
+bfh_non_binary <- bfh[gender != "Non binary", ]
+men <- bfh_non_binary[gender == "Male", ]
+women <- bfh_non_binary[gender == "Female", ]
 boot1000_diff <-
     do(1000) *
-    (mean(resample(men$sleep)) - mean(resample(women$sleep)))
+        (mean(resample(men$sleep)) - mean(resample(women$sleep)))
 confint(boot1000_diff$result, level = 0.95) # [-0.907 -0.231]
 # 95%-Konfidenzintervall: [-0.907 -0.231] da beide Zahlen negativ sind
 # kann man schliessen das die Studenten weniger schlafen als die Frauen
@@ -213,3 +221,21 @@ confint(boot1000_diff$result, level = 0.95) # [-0.907 -0.231]
 height_foot <- height ~ foot
 height_foot_cor_boot <- do(1000) * cor(height_foot, data = resample(bfh))
 confint(height_foot_cor_boot$cor, level = 0.99) # [0.082 0.482]
+
+
+BFH <- read_excel("./WDDA_04.xlsx", sheet = "BFH")
+attach(BFH)
+hist(distance)
+# a, b
+men <- BFH[gender == "Male", ]
+female <- BFH[gender == "Female", ]
+confint(men$maths, level = 0.95)
+confint(women$maths, level = 0.95)
+# c
+mean(men$maths) - mean(female$maths)
+# d
+library(mosaic)
+boot2000_diff <- do(2000) *
+    (mean(resample(female$maths) - mean(resample(men$maths))))
+confint(boot2000_diff$result, level = 0.95)
+sd(boot2000_diff$result)

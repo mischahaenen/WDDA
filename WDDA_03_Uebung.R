@@ -8,24 +8,24 @@ attach(BFH)
 
 # 1. Körpergrösse Männer & Frauen
 # a) Anzahl Frauen grösser als durchschnitt Mann
-mean_man = mean(height[gender == "Male"])
+mean_man <- mean(height[gender == "Male"])
 length(height[(gender == "Female" & height >= mean_man)])
 # b) Anzahl Männer kleiner als durchscnitt Frau
-mean_female = mean(height[gender == "Female"])
+mean_female <- mean(height[gender == "Female"])
 length(height[(gender == "Male" & height <= mean_female)])
 
 # 2. schwarmintelligenz jar
 # a) Mittelwert jar
-mean_jar = mean(jar)
+mean_jar <- mean(jar)
 # b) geburtstadum person bester guess
-kleinste_abweichung = min(abs(jar-405))
+kleinste_abweichung <- min(abs(jar - 405))
 # gibt nur ein resultat
-which.min(abs(jar-405))
+which.min(abs(jar - 405))
 # findet alle resultate
-best_guess = abs(jar-405) == kleinste_abweichung
+best_guess <- abs(jar - 405) == kleinste_abweichung
 dob[best_guess]
 # c) anzahl näher am Tatsächlichen wert als am Median
-sum(abs(jar-405) < abs(jar-mean(jar)))
+sum(abs(jar - 405) < abs(jar - mean(jar)))
 
 # 3. vergleich mittelwert (mean) & median (median)
 # Erklärung: Der Median wird dem Mittelwert vorgezogen, wenn der Datensatz Extremwerte enth¨alt.
@@ -48,17 +48,17 @@ quantile(maths)
 quantile(cash)
 
 # 7. Interquartilsabstand (IQR)
-quantile(height,0.75)-quantile(height,0.25)
-quantile(maths,0.75)-quantile(maths,0.25)
-quantile(cash,0.75)-quantile(cash,0.25)
+quantile(height, 0.75) - quantile(height, 0.25)
+quantile(maths, 0.75) - quantile(maths, 0.25)
+quantile(cash, 0.75) - quantile(cash, 0.25)
 
 # 8. Nebeneinander liegende Boxplots
 # a) Boxplot zeigt Harlängen pro Geschlecht auf
-boxplot(hair~gender, horizontal = T)
+boxplot(hair ~ gender, horizontal = T)
 # b) Boxplot zeigt distanz pro fahrzeug auf
-boxplot(distance~transport, horizontal = T)
+boxplot(distance ~ transport, horizontal = T)
 # c) Boxplot zeigt Fussgrösse aufgeteilt nach Augenfarbe
-boxplot(foot~eye, horizontal = T)
+boxplot(foot ~ eye, horizontal = T)
 
 # 9) Standartabweichung
 # Definition: Die Varianz ist ein Mass für die durchschnittliche Abweichung vom Mittelwert für alle Daten.
@@ -89,19 +89,44 @@ summary(height)
 # 11: Intercontinental Hotels Group (IHG)
 IHG <- read_excel("./WDDA_03.xlsx", sheet = "IHG")
 View(IHG)
-ratings <- IHG$"Customer ratings"
+names(IHG) <- c("hotel", "rating", "reviews")
+attach(IHG)
 # a) Mittelwert
-mean(ratings)
-# a) Median 
-median(ratings)
+mean(rating)
+# a) Median
+median(rating)
 # b) Den Mittelwert oder den Median als Mass für die zentrale Lage zu verwenden
-# Lösung: Mittelwert da es keine Ausreisser gibt.
+# Lösung: Mittelwert da es keine Ausreisser gibt. Besser ist der Durchschnitt
+# da er genauere angaben macht. Des weiteren sind Ausreisser nicht möglich.
 # c) Erste Quartil
-quantile(ratings, 0.25)
+quantile(rating, 0.25)
+# alle quantile anzeigen
+quantile(rating)
 # c) IQR
-quantile(ratings, 0.75) - quantile(ratings, 0.25) 
+quantile(rating, 0.75) - quantile(rating, 0.25)
+IQR(rating)
 # d) 85. Perzentil
-quantile(ratings, 0.85)
+quantile(rating, 0.85)
+
+# Aufgabenserie 3
+# 11. IHG
+# a) Mittelwert
+# a) Durchscnitt
+# c) Quartile
+quantile(rating)
+# c) IQR
+quantile(rating, 0.75) - quantile(rating, 0.25)
+# d) 85 percentile
+quantile(rating, 0.85)
+# 12. polizeiaufzeichnungen
+aufzeichnungen_winter <- c(18, 20, 15, 16, 21, 20, 12, 16, 19, 20)
+aufzeichnungen_sommer <- c(28, 18, 24, 32, 18, 29, 23, 38, 28, 18)
+# a) Spannweite
+max(aufzeichnungen_winter) - min(aufzeichnungen_winter)
+max(aufzeichnungen_sommer) - min(aufzeichnungen_sommer)
+# a) IQR
+quantile(aufzeichnungen_winter, .75) - quantile(aufzeichnungen_winter, .25)
+quantile(aufzeichnungen_sommer, .75) - quantile(aufzeichnungen_sommer, .25)
 
 # 12) Polizeiaufzeichnungen zeigen die täglich gemeldeten Verbrechen
 winter <- c(18, 20, 15, 16, 21, 20, 12, 16, 19, 20)
@@ -134,7 +159,7 @@ height_z <- (height - mean(height)) / sd(height)
 mean(height_z) # ~0
 sd(height_z) # 1
 # b) foot
-foot_z <- (foot- mean(foot)) / sd(foot)
+foot_z <- (foot - mean(foot)) / sd(foot)
 mean(foot_z) # ~0
 sd(foot_z) # 1
 # c) house
@@ -151,24 +176,24 @@ hist(height)
 # b) distance
 distance_z <- (distance - mean(distance)) / sd(distance)
 n <- length(distance_z)
-n / ((n - 1) * (n - 2)) * sum(distance_z ^ 3) # 1.74 -> rechtschief (positiv)
+n / ((n - 1) * (n - 2)) * sum(distance_z^3) # 1.74 -> rechtschief (positiv)
 hist(distance)
 # c) cash
 cash_z <- (cash - mean(cash)) / sd(cash)
 n <- length(cash_z)
-n / ((n - 1) * (n - 2)) * sum(cash_z ^ 3) # 5.5 -> rechtschief (positiv) 
+n / ((n - 1) * (n - 2)) * sum(cash_z^3) # 5.5 -> rechtschief (positiv)
 hist(cash)
 # d) hair men
 hair_men <- hair[gender == "Male"]
 hair_men_z <- (hair_men - mean(hair_men)) / sd(hair_men)
 n <- length(hair_men_z)
-n / ((n - 1) * (n - 2)) * sum(hair_men_z ^ 3) # 1.74 -> rechtschief (positiv) 
+n / ((n - 1) * (n - 2)) * sum(hair_men_z^3) # 1.74 -> rechtschief (positiv)
 hist(hair_men)
 # d) hair women
 hair_women <- hair[gender == "Female"]
 hair_women_z <- (hair_women - mean(hair_women)) / sd(hair_women)
 n <- length(hair_women_z)
-n / ((n - 1) * (n - 2)) * sum(hair_women_z ^ 3) # 0.313 -> leicht rechtschief (positiv) 
+n / ((n - 1) * (n - 2)) * sum(hair_women_z^3) # 0.313 -> leicht rechtschief (positiv)
 hist(hair_women)
 
 # 15)
@@ -177,17 +202,17 @@ hist(hair_women)
 # c) Offensichtlich ist sie rechtsschief.
 # d) Dies ist die Fläche unter der Kurve.
 
-# 16) Vergleichen von Daten 
+# 16) Vergleichen von Daten
 # a) Streudiagramm height & foot
-plot(foot~height)
+plot(foot ~ height)
 # a) Anpassungsgerade height & foot
-fit <- lm(foot~height)
+fit <- lm(foot ~ height)
 abline(fit)
 # a) Korrelationskoeffizient height & foot
 cor(foot, height) # 0.2839648
 # b) hair & foot
-plot(foot~hair)
-fit <- lm(foot~hair)
+plot(foot ~ hair)
+fit <- lm(foot ~ hair)
 abline(fit)
 cor(foot, hair) # -0.1886152
 
@@ -211,4 +236,7 @@ cor(hair, hair)
 
 # 21) Tief (r = 0.17) da Korrelation nicht linear ist
 
-#TODO: 22), 23), 24), 25)
+# 22)
+# 23)
+# 24)
+# 25)

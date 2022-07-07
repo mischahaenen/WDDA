@@ -223,6 +223,7 @@ height_foot_cor_boot <- do(1000) * cor(height_foot, data = resample(bfh))
 confint(height_foot_cor_boot$cor, level = 0.99) # [0.082 0.482]
 
 
+# Alte Prüfungserie
 BFH <- read_excel("./WDDA_04.xlsx", sheet = "BFH")
 attach(BFH)
 hist(distance)
@@ -236,6 +237,6 @@ mean(men$maths) - mean(female$maths)
 # d
 library(mosaic)
 boot2000_diff <- do(2000) *
-    (mean(resample(female$maths) - mean(resample(men$maths))))
+    (mean(resample(men$maths)) - mean(resample(female$maths)))
 confint(boot2000_diff$result, level = 0.95)
 sd(boot2000_diff$result)
